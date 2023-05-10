@@ -1,11 +1,8 @@
 let livros = [];
 const endPoinDaApi = 'https://guilhermeonrails.github.io/casadocodigo/livros.json';
 const secaoDeLivros = document.getElementById('livros');
-const filtros = document.querySelectorAll('.btn');
 
 getBuscarLivrosDaApi();
-
-adicionaListernerNosFiltros(filtros);
 
 async function getBuscarLivrosDaApi() {
     const res = await fetch(endPoinDaApi);
@@ -14,8 +11,6 @@ async function getBuscarLivrosDaApi() {
     let livrosComDesconto = aplicarDesconto(livros);
 
     exibeLivrosNaTela(livrosComDesconto);
-
-    console.table(livros);
 }
 
 function aplicarDesconto(livros) {
@@ -49,33 +44,3 @@ function exibeLivrosNaTela(secao) {
 }
 
 
-function adicionaListernerNosFiltros(filtros) {
-
-  filtros.forEach((element => element.addEventListener('click', function() {
-
-    element.value? 
-    exibeLivrosNaTela(filtraLivros(livros, this.value)) : 
-    getBuscarLivrosDaApi(); //Essa linha executa a mesma ação do if comentado abaixo
-
-
-    // if(element.value){
-      
-    //   const listaDeLivrosFiltrados = filtraLivros(livros, this.value);
-      
-    //   exibeLivrosNaTela(listaDeLivrosFiltrados);
-
-    // }
-
-    // else {
-
-    //   getBuscarLivrosDaApi();
-
-    // }
-
-  })))
-}
-
-function filtraLivros(lista, tipo) {
-  
-  return lista.filter(livro => {return livro.categoria === tipo});
-}
