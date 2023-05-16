@@ -1,17 +1,25 @@
 const btn = document.querySelectorAll('.btn');
 
-adicionaListernerNosFiltros(btn);
+adicionaListenerNosFiltrosPorCategoria(btn);
 
-function adicionaListernerNosFiltros(botoes) {
-    botoes.forEach((btn => btn.addEventListener('click', novaFiltraLivros)
-    ))}
+function adicionaListenerNosFiltrosPorCategoria(botoes) {
+    botoes.forEach((btn => {
+    btn.value? btn.addEventListener('click', filtraLivros) : undefined;
+}))}
 
-function novaFiltraLivros() {
-
-    const tag = this.value;
-    const btnId = this.id;
-
-    let listaDeLivrosFiltrados = livros.filter(livro => {return livro.categoria === tag});
-
-    tag? exibeLivrosNaTela(listaDeLivrosFiltrados) : btnId === 'btnOrdenarPorPreco'? console.log("ORDENAÇÃO") : getBuscarLivrosDaApi();
+function filtraLivros() {
+    const categoria = this.value;
+    let listaDeLivrosFiltrados = categoria == 'disponivel' ? filtrarPorDisponibilidade() : filtrarPorCategoria(categoria);
+    console.log('%cfilter.js line:13 listaDeLivrosFiltrados', 'color: #007acc;', listaDeLivrosFiltrados);
+    exibeLivrosNaTela(listaDeLivrosFiltrados);
+    categoria == 'disponivel' ? exibeSomatoriaDosPrecos(calculaSomatoriaDePrecos(listaDeLivrosFiltrados)) : undefined;
 }
+
+function filtrarPorCategoria(categoria) {
+    return livros.filter(livro => { return livro.categoria === categoria; });
+}
+
+function filtrarPorDisponibilidade() {
+    return livros.filter(livro => { return livro.quantidade > 0; });
+}
+
