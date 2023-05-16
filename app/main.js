@@ -27,9 +27,11 @@ function exibeLivrosNaTela(secao) {
     secaoDeLivros.innerHTML = '';
 
     secao.forEach(livro => {
-        
+
+        let disponibilidade = livro.quantidade <= 0? 'livro__imagens indisponivel' : 'livro__imagens';
+
         const livroAtual = `<div class="livro">
-        <img class="livro__imagens" src="${livro.imagem}" alt="${livro.alt}" />
+        <img class="${disponibilidade}" src="${livro.imagem}" alt="${livro.alt}" />
         <h2 class="livro__titulo">
           ${livro.titulo}:
         </h2>
@@ -39,8 +41,8 @@ function exibeLivrosNaTela(secao) {
           <span class="tag">${livro.categoria}</span>
         </div>
       </div>`//A função numeroEntrada.toFixed(n) retorna o numeroEntrada limitado com n casas depois da vírgula
+
         secaoDeLivros.innerHTML += livroAtual;
     })
 }
-
 
